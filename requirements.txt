@@ -1,0 +1,5 @@
+django
+beautifulsoup4
+requests
+django-bootstrap5
+Pillow

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IvyNet | Intelligence & Competency Network</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body style="background-color: #f8fafc; font-family: 'Outfit', sans-serif;">
+    <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="{% url 'home' %}">IvyNet</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link px-3"
+                            href="{% url 'university_dashboard' %}">Universities</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="{% url 'opportunity_feed' %}">Opportunities</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link px-3" href="{% url 'leaderboard' %}">Leaderboard</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="{% url 'shortlist' %}">Shortlist</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item ms-lg-3">
+                        <a href="{% url 'profile' %}" class="btn btn-primary rounded-pill px-4">
+                            {{ user.username }}
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container py-5">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+</html>

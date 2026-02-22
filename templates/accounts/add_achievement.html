@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row animate-fade-in justify-content-center">
+    <div class="col-md-7">
+        <div class="glass-card p-5">
+            <h2 class="fw-bold mb-4">Log <span style="color: var(--accent-color);">New Achievement</span></h2>
+            <p class="text-muted mb-4">Sharing your success boosts your InCoScore and visibility to Ivy League
+                researchers.</p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Achievement Title</label>
+                        <input type="text" name="title" class="form-control glass-card text-white"
+                            placeholder="e.g., Google HashCode 2024" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Type</label>
+                        <select name="type" class="form-select glass-card text-white" required>
+                            <option value="HACKATHON">Hackathon</option>
+                            <option value="INTERNSHIP">Internship</option>
+                            <option value="RESEARCH">Research Paper</option>
+                            <option value="COMPETITION">Competition Result</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control glass-card text-white" rows="4"
+                        placeholder="Describe your role and what you achieved..." required></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Date Achieved</label>
+                    <input type="date" name="date" class="form-control glass-card text-white" required>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary px-5">Add Achievement</button>
+                    <a href="{% url 'profile' %}" class="btn btn-outline-secondary px-4">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center py-5 animate-fade-in">
+    <div class="col-md-5">
+        <div class="bg-white p-5 rounded-4 border shadow-sm">
+            <h2 class="fw-bold mb-4 text-center">Login to <span class="text-primary">IvyNet</span></h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-muted small">Username</label>
+                    <input type="text" name="username" class="form-control rounded-3" placeholder="Enter your username"
+                        required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-muted small">Password</label>
+                    <input type="password" name="password" class="form-control rounded-3" placeholder="Enter password"
+                        required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill fw-bold">Sign In</button>
+            </form>
+            <div class="mt-4 text-center">
+                <p class="text-secondary small">Don't have an account? <a href="{% url 'register' %}"
+                        class="text-primary fw-bold text-decoration-none">Join the network</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

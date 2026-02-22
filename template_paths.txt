@@ -1,0 +1,2 @@
+C:\Users\jubye\OneDrive\Documents\Course\PEP\LPU\Projects\Project6\templates\community\feed.html
+C:\Users\jubye\OneDrive\Documents\Course\PEP\LPU\Projects\Project6\templates\opportunities\feed.html

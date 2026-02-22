@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mb-4 animate-fade-in">
+    <div class="col-lg-8">
+        <h1 class="display-5 fw-bold mb-2 text-dark">Ivy League <span style="color: #007bff;">Intelligence</span></h1>
+        <p class="text-secondary">Monitoring <strong>{{ opportunities.count }}</strong> real-time opportunities across
+            the global academic network.</p>
+    </div>
+    <div class="col-lg-4 d-flex align-items-center justify-content-end gap-2">
+        <a href="{% url 'refresh_opportunities' %}" class="btn btn-primary py-2 px-4 rounded-pill shadow-sm">
+            <i class="bi bi-arrow-clockwise me-1"></i> Refresh Feed
+        </a>
+    </div>
+</div>
+
+<!-- Intelligence Filters -->
+<div class="mb-5 overflow-auto pb-2" style="white-space: nowrap;">
+    <a href="{% url 'opportunity_feed' %}"
+        class="btn {% if not request.GET.univ %}btn-dark{% else %}btn-outline-secondary{% endif %} rounded-pill px-4 me-2">
+        All Sources
+    </a>
+    {% for univ in universities %}
+    <a href="?univ={{ univ.name|urlencode }}"
+        class="btn {% if request.GET.univ == univ.name %}btn-dark{% else %}btn-outline-secondary{% endif %} rounded-pill px-4 me-2">
+        {{ univ.name }}
+    </a>
+    {% endfor %}
+</div>
+
+<div class="row g-4">
+    {% for opp in opportunities %}
+    <div class="col-xl-4 col-md-6 mb-2">
+        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden card-hover">
+            <div class="card-body p-4 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <span class="badge bg-primary-subtle text-primary fw-bold text-uppercase"
+                        style="font-size: 0.7rem;">
+                        {{ opp.get_domain_display }}
+                    </span>
+                    <span class="text-muted small fw-bold">{{ opp.posted_date|date:"M d" }}</span>
+                </div>
+
+                <h5 class="card-title fw-bold mb-1 text-dark">{{ opp.title }}</h5>
+                <p class="text-primary small fw-semibold mb-3">{{ opp.university.name }}</p>
+
+                {% if opp.event_date or opp.location %}
+                <div class="bg-light p-2 rounded-3 mb-3 small border-start border-primary border-4">
+                    {% if opp.event_date %}
+                    <div class="text-dark mb-1"><i class="bi bi-clock me-1 text-primary"></i> {{ opp.event_date }}</div>
+                    {% endif %}
+                    {% if opp.location %}
+                    <div class="text-secondary"><i class="bi bi-geo-alt me-1 text-primary"></i> {{ opp.location }}</div>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <p class="card-text text-secondary small flex-grow-1">
+                    {{ opp.description|truncatewords:35 }}
+                </p>
+
+                <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center">
+                    <small class="text-muted fw-bold">ID: #{{ opp.id|stringformat:"05d" }}</small>
+                    <div class="d-flex gap-2">
+                        <a href="{{ opp.link }}" target="_blank"
+                            class="btn btn-link btn-sm text-decoration-none p-0 text-muted fw-bold me-2">Original
+                            Source</a>
+                        <a href="{% url 'apply_opportunity' opp.pk %}"
+                            class="btn btn-primary btn-sm px-4 rounded-pill">Apply</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <div class="bg-white p-5 rounded-4 border border-dashed">
+            <i class="bi bi-search display-1 text-muted opacity-25 mb-4"></i>
+            <h3 class="text-secondary">No matching opportunities found.</h3>
+            <p class="text-muted">Try clearing your filters or refreshing the intelligence feed.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .card-hover {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, .1) !important;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mb-5">
+    <div class="col-lg-12">
+        <h1 class="display-4 fw-bold mb-3">Ivy League Universities</h1>
+        <p class="lead text-secondary">Discover intelligence-driven opportunities at the world's most prestigious institutions.</p>
+    </div>
+</div>
+<div class="row">
+    {% for univ in universities %}
+    <div class="col-lg-3 col-md-6 mb-4">
+        <a href="{% url 'university_detail' univ.slug %}" class="text-decoration-none">
+            <div class="bg-white p-4 text-center rounded-3 border shadow-sm hover-up">
+                <div class="rounded-circle bg-light border border-primary mx-auto mb-4 d-flex align-items-center justify-content-center h2 fw-bold text-primary" style="width: 80px; height: 80px;">{{ univ.name|first|upper }}</div>
+                <h4 class="fw-bold text-dark mb-3">{{ univ.name }}</h4>
+                <span class="btn btn-outline-primary btn-sm rounded-pill px-4">Explore</span>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
